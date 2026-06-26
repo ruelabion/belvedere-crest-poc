@@ -1,10 +1,10 @@
 /*==============================================================================
 [Master Stylesheet]
 
-Project:        Aquila - Luxury Hotel & Resort
+Project:        Belvedere Crest - Luxury Hotel & Resort
 Version:        1.0
 Primary use:    Main Website Stylesheet
-Description:    Aquila is a modern and elegant HTML5 Bootstrap template specially designed for luxury hotels, resorts, and hospitality businesses.
+Description:    Belvedere Crest is a modern and elegant HTML5 Bootstrap template specially designed for luxury hotels, resorts, and hospitality businesses.
                 It is perfectly suitable for hotels, beachfront resorts, villas, boutique hotels, holiday accommodations, spa & wellness resorts, travel lodges, and premium hospitality services.
 ==============================================================================*/
 
@@ -1536,14 +1536,14 @@ ul{
     margin: 0px;
 }
 
-.aquila-breadcrumb{
+.belvedere-breadcrumb{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 20px 20px;
 }
 
-.aquila-breadcrumb .breadcrumb-item{
+.belvedere-breadcrumb .breadcrumb-item{
     font-family: var(--font-family-2);
     font-size: 1rem;
     font-weight: 400;
@@ -1553,11 +1553,11 @@ ul{
     transition: all 0.3s ease;
 }
 
-.aquila-breadcrumb .breadcrumb-item:hover{
+.belvedere-breadcrumb .breadcrumb-item:hover{
     color: var(--accent-color);
 }
 
-.aquila-breadcrumb .breadcrumb-separator{
+.belvedere-breadcrumb .breadcrumb-separator{
     color: var(--primary);
 }
 
