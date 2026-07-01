@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rooms - Belvedere Crest - Luxury Hotel & Resort</title>
+    <meta name="description" content="Browse Belvedere Crest's six room types — Single, Couple, Family, Standard, Deluxe, and VIP — with rates, sizes, and amenities to find the perfect luxury stay.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rooms - Belvedere Crest - Luxury Hotel & Resort">
+    <meta property="og:description" content="Compare room styles, rates, and amenities at Belvedere Crest, from cozy Standard rooms to the premium VIP Room.">
+    <meta property="og:image" content="assets/images/Logo.png">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
@@ -731,7 +736,7 @@
                                                             <div class="room-icon">
                                                                 <i class="fa-solid fa-bed"></i>
                                                             </div>
-                                                            <p class="mb-0">1 Bed</p>
+                                                            <p class="mb-0">2 Beds</p>
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -749,7 +754,7 @@
                                                             <div class="room-icon">
                                                                 <i class="fa-solid fa-user-group"></i>
                                                             </div>
-                                                            <p class="mb-0">1 - 2 People</p>
+                                                            <p class="mb-0">1 - 4 People</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1174,10 +1179,38 @@
                             </a>
                         </div>
                     </div>
+                    <div class="powered-by-container">
+                        <p class="powered-by-text">Powered by <a href="https://spiceworx.com" target="_blank" rel="noopener noreferrer" class="powered-by-link">Spiceworx</a> — Managed Web Hosting, Web Development &amp; AI Business Chatbots</p>
+                    </div>
                 </div>
             </div>
         </section>
     </footer>
+
+
+    <!-- Chat Widget -->
+    <button id="floatingChatBtn" aria-label="Open AI Assistant">
+        <span class="fcb_icon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></span>
+        <span id="floatingChatLabel">Ask AI</span>
+    </button>
+    <div id="chatOverlay">
+        <div id="chatPanel">
+            <div id="chatPanelHeader">
+                <div id="chatAvatarWrap">
+                    <div id="chatAvatar"><img src="/assets/images/chat-image.png" alt="Belvedere Crest"></div>
+                    <div id="chatOnlineDot"></div>
+                </div>
+                <div id="chatHeaderText">
+                    <span id="chatPanelTitle">Belvedere Crest AI Assistant</span>
+                    <span id="chatHeaderSub">Ask about rooms, offers, and guest services</span>
+                </div>
+                <button id="closeChatBtn" aria-label="Close">&#10005;</button>
+            </div>
+            <iframe id="chatFrame" src="" title="AI Assistant" frameborder="0" allowtransparency="true"></iframe>
+        </div>
+    </div>
+    <link rel="stylesheet" href="/assets/css/chat-widget.css">
+    <script src="/assets/js/chat-widget.js"></script>
 
     <!-- Script -->
     <script src="assets/js/vendor/jquery.min.js"></script>

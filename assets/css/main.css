@@ -1089,6 +1089,28 @@ ul{
     letter-spacing: normal;
 }
 
+.powered-by-container{
+    display: flex;
+    justify-content: center;
+    padding: 1em 0em 0em 0em;
+}
+
+.powered-by-text{
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.4em;
+    color: var(--primary);
+    opacity: 0.7;
+    margin: 0;
+    text-align: center;
+}
+
+.powered-by-link{
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
 /* === 14. Form Style === */
 
 .form{

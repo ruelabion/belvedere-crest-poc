@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQs - Belvedere Crest - Luxury Hotel & Resort</title>
+    <meta name="description" content="Find answers to common Belvedere Crest guest questions about check-in/check-out, cancellations, Wi-Fi, pets, payment methods, and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="FAQs - Belvedere Crest - Luxury Hotel & Resort">
+    <meta property="og:description" content="Everything guests need to know before booking a stay at Belvedere Crest.">
+    <meta property="og:image" content="assets/images/Logo.png">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
@@ -210,7 +215,7 @@
                                 <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion1">
                                     <div class="accordion-body">
                                         <p>
-                                            Yes. Private airport transfers can be arranged in advance through our reservations team for a smooth arrival and departure.
+                                            Cancellations must be made at least 48 hours before arrival to avoid charges. Late cancellations, no-shows, or early departures may be charged according to the rate policy confirmed at booking.
                                         </p>
                                     </div>
                                 </div>
@@ -242,7 +247,7 @@
                                 <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion1">
                                     <div class="accordion-body">
                                         <p>
-                                            Pets are not generally permitted, with the exception of service animals. Please contact the hotel before arrival for assistance.
+                                            Yes. Pets are welcome in designated rooms. Please let us know in advance so we can prepare accordingly and confirm availability.
                                         </p>
                                     </div>
                                 </div>
@@ -258,7 +263,7 @@
                                     data-bs-parent="#faqAccordion1">
                                     <div class="accordion-body">
                                         <p>
-                                            Yes. Families can enjoy larger rooms, breakfast options, pool access, and support from our team for practical travel needs.
+                                            Yes. Private airport transfers can be arranged in advance through our reservations team for a smooth arrival and departure.
                                         </p>
                                     </div>
                                 </div>
@@ -278,7 +283,7 @@
                                     data-bs-parent="#faqAccordion2">
                                     <div class="accordion-body">
                                         <p>
-                                            Guests can enjoy daily breakfast, in-room dining, and seasonal menus highlighting polished comfort dishes and local inspiration.
+                                            Room upgrades may be available at check-in or by request before arrival, depending on room availability and travel dates.
                                         </p>
                                     </div>
                                 </div>
@@ -294,7 +299,7 @@
                                 <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion2">
                                     <div class="accordion-body">
                                         <p>
-                                            Room upgrades may be available at check-in or by request before arrival, depending on room availability and travel dates.
+                                            Please contact our reservations team in advance to discuss accessible room options. We're happy to help accommodate specific needs where available.
                                         </p>
                                     </div>
                                 </div>
@@ -310,7 +315,7 @@
                                 <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion2">
                                     <div class="accordion-body">
                                         <p>
-                                            Parking is available for hotel guests. For special vehicle arrangements or extended stays, please contact the front desk.
+                                            Every room includes free Wi-Fi, free breakfast, room service, spa and wellness access, swimming pool access, and a shower bathtub.
                                         </p>
                                     </div>
                                 </div>
@@ -326,7 +331,7 @@
                                 <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion2">
                                     <div class="accordion-body">
                                         <p>
-                                            Check-in begins at 3:00 PM and check-out is at 12:00 PM. Early arrival or late departure may be arranged depending on availability.
+                                            Extra beds and cribs can be arranged upon request, subject to availability. Please let us know in advance so we can prepare your room accordingly.
                                         </p>
                                     </div>
                                 </div>
@@ -484,10 +489,38 @@
                             </a>
                         </div>
                     </div>
+                    <div class="powered-by-container">
+                        <p class="powered-by-text">Powered by <a href="https://spiceworx.com" target="_blank" rel="noopener noreferrer" class="powered-by-link">Spiceworx</a> — Managed Web Hosting, Web Development &amp; AI Business Chatbots</p>
+                    </div>
                 </div>
             </div>
         </section>
     </footer>
+
+
+    <!-- Chat Widget -->
+    <button id="floatingChatBtn" aria-label="Open AI Assistant">
+        <span class="fcb_icon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></span>
+        <span id="floatingChatLabel">Ask AI</span>
+    </button>
+    <div id="chatOverlay">
+        <div id="chatPanel">
+            <div id="chatPanelHeader">
+                <div id="chatAvatarWrap">
+                    <div id="chatAvatar"><img src="/assets/images/chat-image.png" alt="Belvedere Crest"></div>
+                    <div id="chatOnlineDot"></div>
+                </div>
+                <div id="chatHeaderText">
+                    <span id="chatPanelTitle">Belvedere Crest AI Assistant</span>
+                    <span id="chatHeaderSub">Ask about rooms, offers, and guest services</span>
+                </div>
+                <button id="closeChatBtn" aria-label="Close">&#10005;</button>
+            </div>
+            <iframe id="chatFrame" src="" title="AI Assistant" frameborder="0" allowtransparency="true"></iframe>
+        </div>
+    </div>
+    <link rel="stylesheet" href="/assets/css/chat-widget.css">
+    <script src="/assets/js/chat-widget.js"></script>
 
     <!-- Script -->
     <script src="assets/js/vendor/jquery.min.js"></script>

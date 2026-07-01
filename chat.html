@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Belvedere Crest AI Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Manrope', sans-serif; background: #fafaf8; color: #333; font-size: 14px; }
+    body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+    .date_divider { text-align: center; margin: 4px 0 6px; }
+    .date_divider span { background: #EBEBEB; color: #999; font-size: 11px; padding: 3px 14px; border-radius: 20px; }
+
+    #chat_window {
+      flex: 1; overflow-y: auto; padding: 14px 14px 8px;
+      display: flex; flex-direction: column; gap: 10px; background: #fafaf8;
+    }
+    #chat_window::-webkit-scrollbar { width: 4px; }
+    #chat_window::-webkit-scrollbar-track { background: transparent; }
+    #chat_window::-webkit-scrollbar-thumb { background: #d0cdc8; border-radius: 4px; }
+
+    .msg_row { display: flex; align-items: flex-end; gap: 8px; }
+    .msg_row.user { justify-content: flex-end; }
+
+    .bot_avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: #fff; border: 1.5px solid #e5e0db;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; align-self: flex-end; overflow: hidden; padding: 4px;
+    }
+    .bot_avatar img { width: 100%; height: 100%; object-fit: contain; }
+
+    .msg_group { display: flex; flex-direction: column; gap: 3px; max-width: 82%; }
+    .msg_row.user .msg_group { align-items: flex-end; }
+    .msg_time { font-size: 10px; color: #aaa; padding: 0 4px; }
+
+    .msg_response, .msg_text { padding: 11px 15px; font-size: 13.5px; line-height: 1.55; word-wrap: break-word; white-space: pre-wrap; }
+    .msg_response { background: #efefed; color: #222; border-radius: 4px 18px 18px 18px; }
+    .msg_text     { background: rgba(103,39,29,0.10); color: #302722; border-radius: 18px 4px 18px 18px; }
+
+    .msg_response.md { white-space: normal; }
+    .msg_response.md ul.msg_list { margin: 6px 0 6px 4px; padding-left: 18px; list-style: disc; }
+    .msg_response.md ul.msg_opts { margin: 6px 0 6px 4px; padding-left: 0; list-style: none; }
+    .msg_response.md ul.msg_opts li::before { content: '→ '; color: #67271d; font-weight: 600; }
+    .msg_response.md ul.msg_opts li { cursor: pointer; border-radius: 4px; padding: 2px 8px 2px 4px; margin-left: -4px; transition: background 0.15s; }
+    .msg_response.md ul.msg_opts li:hover { background: rgba(103,39,29,0.08); }
+    .msg_response.md li { margin-bottom: 3px; }
+    .msg_response.md strong { font-weight: 700; }
+
+    .cta_row { display: flex; flex-wrap: wrap; gap: 8px; padding: 2px 4px 6px 38px; }
+    .cta_btn { padding: 8px 18px; border-radius: 22px; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; border: none; transition: background 0.18s, transform 0.12s; text-decoration: none; display: inline-block; text-align: left; }
+    .cta_btn:active { transform: scale(0.97); }
+    .cta_sales { background: #67271d; color: #fff; }
+    .cta_sales:hover { background: #843d32; }
+    .cta_quote { background: #fff; color: #67271d; border: 1.5px solid #67271d; }
+    .cta_quote:hover { background: rgba(103,39,29,0.06); }
+
+    .cta_chip { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 400; font-family: inherit; cursor: pointer; border: none; transition: background 0.18s; text-decoration: none; display: inline-block; color: #67271d; }
+    .cta_chip_sales { background: rgba(103,39,29,0.10); }
+    .cta_chip_sales:hover { background: rgba(103,39,29,0.18); }
+    .cta_chip_quote { background: rgba(103,39,29,0.06); }
+    .cta_chip_quote:hover { background: rgba(103,39,29,0.13); }
+
+
+    #chat_form { background: #fff; border-top: 1px solid #e5e5e1; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+    .form_row { display: flex; gap: 8px; align-items: center; }
+
+    #chat_input {
+      flex: 1; padding: 10px 16px;
+      border: 1.5px solid #dedad6; border-radius: 22px;
+      font-size: 16px; font-family: inherit; color: #333;
+      background: #f5f5f3; outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    #chat_input:focus { border-color: #67271d; background: #fff; box-shadow: 0 0 0 3px rgba(103,39,29,0.1); }
+
+    #chat_submit {
+      flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
+      background: #67271d; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s, transform 0.12s, opacity 0.18s; padding: 0;
+    }
+    #chat_submit:hover:not(:disabled) { background: #843d32; }
+    #chat_submit:active:not(:disabled) { transform: scale(0.92); }
+    #chat_submit:disabled { opacity: 0.35; cursor: not-allowed; }
+    #chat_submit svg { display: block; }
+
+    #chat_footer { text-align: center; font-size: 11px; color: #bbb; padding: 0 0 4px; }
+  </style>
+</head>
+<body>
+
+  <div id="chat_window">
+    <div class="date_divider"><span>Today</span></div>
+    <div class="msg_row bot" data-static="true">
+      <div class="bot_avatar"><img src="/assets/images/chat-image.png" alt="Belvedere Crest"></div>
+      <div class="msg_group">
+        <div class="msg_response">Hi! I'm the Belvedere Crest AI assistant. How can I help with your stay?</div>
+        <div class="msg_time" id="greeting_time"></div>
+      </div>
+    </div>
+    <div class="cta_row" style="padding-top: 0;">
+      <button type="button" class="cta_btn cta_quote suggestion">What rooms are available?</button>
+      <button type="button" class="cta_btn cta_quote suggestion">What special offers do you have?</button>
+      <button type="button" class="cta_btn cta_quote suggestion">How do I book or get in touch?</button>
+    </div>
+  </div>
+
+  <form id="chat_form" novalidate>
+    <div class="form_row">
+      <input type="text" id="chat_input" placeholder="Ask about rooms, offers, or guest services..." autocomplete="off">
+      <button type="submit" id="chat_submit" aria-label="Send message" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div id="chat_footer">Powered by <a href="https://spiceworx.com" target="_blank" rel="noopener noreferrer" style="color:inherit;">SpiceWorx AI</a> · Press Enter to send</div>
+  </form>
+
+  <script>
+    const API_BASE  = 'https://api.spiceworx.com';
+    const API_KEY   = 'RUp9tMW1hXN622Zer2zk1Wk1nAj4A9x9x8XkXGE7Soo';
+    const TENANT_ID = 'joignacio';
+
+    const chatWindow = document.getElementById('chat_window');
+    const form       = document.getElementById('chat_form');
+    const input      = document.getElementById('chat_input');
+    const submitBtn  = document.getElementById('chat_submit');
+
+    document.getElementById('greeting_time').textContent = formatTime(new Date());
+
+    input.addEventListener('input', () => { submitBtn.disabled = input.value.trim().length === 0; });
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }
+    });
+
+    function formatTime(d) {
+      const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      let h = d.getHours(), m = d.getMinutes(), ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+      return `${days[d.getDay()]} ${h}:${String(m).padStart(2,'0')} ${ampm}`;
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+    }
+
+    function renderMarkdown(raw) {
+      const lines = raw.split('\n');
+      let html = '', listType = null;
+      function closeList() { if (listType) { html += '</ul>'; listType = null; } }
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        const isBullet = /^[-*]\s+/.test(line);
+        const isOpt    = /^→\s+/.test(line);
+        if (isBullet || isOpt) {
+          const needed = isBullet ? 'msg_list' : 'msg_opts';
+          if (listType !== needed) { closeList(); html += `<ul class="${needed}">`; listType = needed; }
+          html += `<li>${applyInline(escapeHtml(line.replace(/^[-*→]\s+/, '')))}</li>`;
+        } else {
+          closeList();
+          const trimmed = line.trim();
+          if (trimmed === '') { if (html && !html.endsWith('<br>') && !html.endsWith('</ul>')) html += '<br>'; }
+          else html += applyInline(escapeHtml(trimmed)) + '\n';
+        }
+      }
+      closeList();
+      return html.replace(/\n$/, '');
+    }
+
+    function linkifyText(text) {
+      // Split on URLs first (before escaping) so & in query strings survives as a valid href
+      return text.split(/(https?:\/\/[^\s<>"]+)/g).map((part, i) => {
+        if (i % 2 === 1) {
+          // Strip trailing sentence punctuation — it belongs to surrounding text, not the URL
+          const stripped = part.replace(/[.,;:!?)>\]]+$/, '');
+          const trail    = part.slice(stripped.length);
+          const safe     = escapeHtml(stripped);
+          return `<a href="${safe}" style="color:#67271d;">${safe}</a>${escapeHtml(trail)}`;
+        }
+        return escapeHtml(part);
+      }).join('');
+    }
+
+    function applyInline(escaped) {
+      return escaped
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/(https?:\/\/[^\s"<>]+)/g, (match) => {
+          // Strip trailing sentence punctuation before building the href
+          const stripped = match.replace(/[.,;:!?)>\]]+$/, '');
+          const trail    = match.slice(stripped.length);
+          // decode &amp; back to & so the href is a valid URL
+          const href     = stripped.replace(/&amp;/g, '&');
+          return `<a href="${href}" style="color:#67271d;">${stripped}</a>${trail}`;
+        });
+    }
+
+    document.querySelectorAll('.suggestion').forEach(chip => {
+      chip.addEventListener('click', () => {
+        input.value = chip.textContent.trim();
+        submitBtn.disabled = false;
+        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      });
+    });
+
+    function connectWithSales() {
+      const messages = [];
+      chatWindow.querySelectorAll('.msg_row:not([data-static])').forEach(row => {
+        const isUser = row.classList.contains('user');
+        const bubble = row.querySelector('.msg_text, .msg_response');
+        if (bubble) {
+          const text = bubble.textContent.trim();
+          if (text && text !== 'Thinking…') messages.push({ role: isUser ? 'user' : 'assistant', text });
+        }
+      });
+      if (!messages.length) { alert('Please have a conversation first.'); return; }
+      const transcript = messages.map(m => `[${m.role === 'user' ? 'You' : 'AI'}]: ${m.text}`).join('\n\n');
+      window.parent.postMessage({ type: 'openContacts', chatUserMessage: transcript }, window.location.origin);
+    }
+
+    function addMessage(role, text) {
+      const now = formatTime(new Date());
+      const row = document.createElement('div');
+      row.className = `msg_row ${role}`;
+      if (role === 'user') {
+        row.innerHTML = `<div class="msg_group"><div class="msg_text">${escapeHtml(text)}</div><div class="msg_time" style="text-align:right">${now}</div></div>`;
+      } else {
+        row.innerHTML = `<div class="bot_avatar"><img src="/assets/images/chat-image.png" alt="Belvedere Crest"></div><div class="msg_group"><div class="msg_response">${escapeHtml(text)}</div><div class="msg_time">${now}</div></div>`;
+      }
+      chatWindow.appendChild(row);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      return row;
+    }
+
+    let ctaAdded = false;
+    function addCTARow() {
+      if (ctaAdded) return;
+      ctaAdded = true;
+      const div = document.createElement('div');
+      div.className = 'cta_row';
+      div.innerHTML = `<button class="cta_chip cta_chip_sales">Send Inquiry</button><a href="/contact.html" class="cta_chip cta_chip_quote" target="_parent">Contact Guest Services</a>`;
+      chatWindow.appendChild(div);
+      div.querySelector('.cta_chip_sales').addEventListener('click', connectWithSales);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    let msgCount = 0;
+    let conversationHistory = [];
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (!message) return;
+      input.value = '';
+      addMessage('user', message);
+      input.disabled = true;
+      submitBtn.disabled = true;
+      const thinking = addMessage('bot', 'Thinking…');
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
+      let reader = null;
+      try {
+        const r = await fetch(`${API_BASE}/chat/stream`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-API-Key': API_KEY },
+          body: JSON.stringify({ message, tenant_id: TENANT_ID, lang: 'en', conversation_history: conversationHistory }),
+          signal: controller.signal
+        });
+        if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+
+        reader = r.body.getReader();
+        const decoder = new TextDecoder();
+        const responseEl = thinking.querySelector('.msg_response');
+        responseEl.textContent = '';
+
+        let sources = [], buffer = '', fullText = '';
+
+        function processLine(line) {
+          if (!line.startsWith('data: ')) return false;
+          const payload = line.slice(6);
+          if (payload === '[DONE]') return true;
+          if (payload.startsWith('[SOURCES]')) { try { sources = JSON.parse(payload.slice(9)).sources || []; } catch {} return false; }
+          const token = (() => { try { return JSON.parse(payload); } catch { return payload; } })();
+          fullText += token;
+          responseEl.textContent = fullText;
+          chatWindow.scrollTop = chatWindow.scrollHeight;
+          return false;
+        }
+
+        outer: while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            if (buffer) processLine(buffer);
+            break;
+          }
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop();
+          for (const line of lines) {
+            if (processLine(line)) break outer;
+          }
+        }
+
+        const hasMd = /^[-*→]/m.test(fullText) || /\*\*.+\*\*/.test(fullText);
+        if (hasMd) {
+          responseEl.classList.add('md');
+          responseEl.innerHTML = renderMarkdown(fullText);
+          responseEl.querySelectorAll('ul.msg_opts li').forEach(li => {
+            li.addEventListener('click', () => { input.value = li.textContent.trim(); submitBtn.disabled = false; input.focus(); });
+          });
+        } else {
+          responseEl.innerHTML = linkifyText(fullText);
+        }
+
+        conversationHistory.push({ role: 'user', content: message });
+        conversationHistory.push({ role: 'assistant', content: fullText });
+        if (conversationHistory.length > 6) conversationHistory = conversationHistory.slice(-6);
+
+        msgCount++;
+        if (msgCount >= 2) { addCTARow(); msgCount = 0; }
+
+      } catch (err) {
+        const errMsg = err.name === 'AbortError' ? '❌ Request timed out. Please try again.' : `❌ Error: ${err.message}`;
+        thinking.querySelector('.msg_response').textContent = errMsg;
+        thinking.querySelector('.msg_response').style.color = '#67271d';
+      } finally {
+        clearTimeout(timeout);
+        if (reader) { try { reader.cancel(); } catch {} }
+        input.disabled = false;
+        submitBtn.disabled = input.value.trim().length === 0;
+        input.focus();
+      }
+    });
+
+    window.addEventListener('message', e => { if (e.data?.type === 'closeChat') window.close(); });
+
+    document.getElementById('chat_window').addEventListener('click', function(e) {
+      const link = e.target.closest('a[href]');
+      if (!link) return;
+      e.preventDefault();
+      window.parent.postMessage({ type: 'navigateTo', url: link.href }, window.location.origin);
+    });
+  </script>
+
+</body>
+</html>

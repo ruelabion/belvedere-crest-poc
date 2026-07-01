@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Belvedere Crest - Luxury Hotel & Resort</title>
+    <meta name="description" content="Get in touch with Belvedere Crest for reservations, special requests, and guest support. Call +123 123 123 or email hello@belvederecrest.com.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact - Belvedere Crest - Luxury Hotel & Resort">
+    <meta property="og:description" content="Reach the Belvedere Crest team for reservations, special requests, and guest support.">
+    <meta property="og:image" content="assets/images/Logo.png">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
@@ -219,8 +224,8 @@
 
                     <div class="contact-form-container">
                         <iframe loading="lazy" class="maps contact-maps"
-                            src="https://maps.google.com/maps?q=London%20Eye,%20London,%20United%20Kingdom&amp;t=m&amp;z=14&amp;output=embed&amp;iwloc=near"
-                            title="London Eye, London, United Kingdom" aria-label="London Eye, London, United Kingdom">
+                            src="https://maps.google.com/maps?q=7%20Sanctuary%20Vale,%20Crestwood%20Haven&amp;t=m&amp;z=14&amp;output=embed&amp;iwloc=near"
+                            title="7 Sanctuary Vale, Crestwood Haven" aria-label="7 Sanctuary Vale, Crestwood Haven">
                         </iframe>
 
                         <div class="card card-contact-form">
@@ -364,10 +369,49 @@
                             </a>
                         </div>
                     </div>
+                    <div class="powered-by-container">
+                        <p class="powered-by-text">Powered by <a href="https://spiceworx.com" target="_blank" rel="noopener noreferrer" class="powered-by-link">Spiceworx</a> — Managed Web Hosting, Web Development &amp; AI Business Chatbots</p>
+                    </div>
                 </div>
             </div>
         </section>
     </footer>
+
+
+    <!-- Chat Widget -->
+    <button id="floatingChatBtn" aria-label="Open AI Assistant">
+        <span class="fcb_icon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></span>
+        <span id="floatingChatLabel">Ask AI</span>
+    </button>
+    <div id="chatOverlay">
+        <div id="chatPanel">
+            <div id="chatPanelHeader">
+                <div id="chatAvatarWrap">
+                    <div id="chatAvatar"><img src="/assets/images/chat-image.png" alt="Belvedere Crest"></div>
+                    <div id="chatOnlineDot"></div>
+                </div>
+                <div id="chatHeaderText">
+                    <span id="chatPanelTitle">Belvedere Crest AI Assistant</span>
+                    <span id="chatHeaderSub">Ask about rooms, offers, and guest services</span>
+                </div>
+                <button id="closeChatBtn" aria-label="Close">&#10005;</button>
+            </div>
+            <iframe id="chatFrame" src="" title="AI Assistant" frameborder="0" allowtransparency="true"></iframe>
+        </div>
+    </div>
+    <link rel="stylesheet" href="/assets/css/chat-widget.css">
+    <script src="/assets/js/chat-widget.js"></script>
+
+    <script>
+        (function() {
+            var transcript = sessionStorage.getItem('chatTranscript');
+            if (transcript) {
+                var el = document.getElementById('message');
+                if (el) el.value = transcript;
+                sessionStorage.removeItem('chatTranscript');
+            }
+        })();
+    </script>
 
     <!-- Script -->
     <script src="assets/js/vendor/jquery.min.js"></script>

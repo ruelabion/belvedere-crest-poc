@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Single Post - Belvedere Crest - Luxury Hotel & Resort</title>
+    <meta name="description" content="Insider tips for an unforgettable stay at Belvedere Crest — planning advice to help guests make the most of their luxury getaway.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Insider Tips for an Unforgettable Stay at Belvedere Crest">
+    <meta property="og:description" content="Planning advice to help guests make the most of their luxury getaway at Belvedere Crest.">
+    <meta property="og:image" content="assets/images/Logo.png">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
@@ -378,10 +383,38 @@
                             </a>
                         </div>
                     </div>
+                    <div class="powered-by-container">
+                        <p class="powered-by-text">Powered by <a href="https://spiceworx.com" target="_blank" rel="noopener noreferrer" class="powered-by-link">Spiceworx</a> — Managed Web Hosting, Web Development &amp; AI Business Chatbots</p>
+                    </div>
                 </div>
             </div>
         </section>
     </footer>
+
+
+    <!-- Chat Widget -->
+    <button id="floatingChatBtn" aria-label="Open AI Assistant">
+        <span class="fcb_icon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></span>
+        <span id="floatingChatLabel">Ask AI</span>
+    </button>
+    <div id="chatOverlay">
+        <div id="chatPanel">
+            <div id="chatPanelHeader">
+                <div id="chatAvatarWrap">
+                    <div id="chatAvatar"><img src="/assets/images/chat-image.png" alt="Belvedere Crest"></div>
+                    <div id="chatOnlineDot"></div>
+                </div>
+                <div id="chatHeaderText">
+                    <span id="chatPanelTitle">Belvedere Crest AI Assistant</span>
+                    <span id="chatHeaderSub">Ask about rooms, offers, and guest services</span>
+                </div>
+                <button id="closeChatBtn" aria-label="Close">&#10005;</button>
+            </div>
+            <iframe id="chatFrame" src="" title="AI Assistant" frameborder="0" allowtransparency="true"></iframe>
+        </div>
+    </div>
+    <link rel="stylesheet" href="/assets/css/chat-widget.css">
+    <script src="/assets/js/chat-widget.js"></script>
 
     <!-- Script -->
     <script src="assets/js/vendor/jquery.min.js"></script>
